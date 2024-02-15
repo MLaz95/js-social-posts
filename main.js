@@ -83,7 +83,7 @@ posts.forEach((post) => {
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="${post['id']}">
+                <a class="like-button  js-like-button" href="#!" data-postid="${post['id']}">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
@@ -104,26 +104,35 @@ console.log(document.querySelectorAll('.js-likes-counter'))
 
 const likeButtonList = document.querySelectorAll('.like-button');
 const likeCounterList = document.querySelectorAll('.js-likes-counter');
+const likedArray = [];
 
 likeButtonList.forEach(button =>{
     button.addEventListener('click', ()=>{
 
-        // number that matches a button with the index of its post
-        const buttonId = posts[button.getAttribute('data-postid')];
+        // post that matches the clicked like button
+        const postObject = posts[button.getAttribute('data-postid')];
         
-        // checks if you've like the post before
+        // checks if you've liked the post before
         if(!button.classList.contains('like-button--liked')){
             // if you are adding a like it increases the likes in the object array and changes the html to reflect it
-            buttonId['likes']++;
-            likeCounterList[button.getAttribute('data-postid')].innerHTML = buttonId['likes']
+            postObject['likes']++;
+            likeCounterList[button.getAttribute('data-postid')].innerHTML = postObject['likes'];
+
+            // adds post id to liked array
+            likedArray.push(postObject['id']);
         } else{
             // if you are removing a like it decreses the likes in the object array and changes the html to reflect it
-            buttonId['likes']--;
-            likeCounterList[button.getAttribute('data-postid')].innerHTML = buttonId['likes']
+            postObject['likes']--;
+            likeCounterList[button.getAttribute('data-postid')].innerHTML = postObject['likes'];
+
+            // removes post id from liked array
+            const index = likedArray.indexOf(postObject['id']);
+            likedArray.splice(index, 1);
         }
 
         // toogles the liked class onto the button
         button.classList.toggle('like-button--liked');
+        console.log(likedArray)
     })
 })
 
