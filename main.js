@@ -1,6 +1,6 @@
 const posts = [
     {
-        "id": 1,
+        "id": 0,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "media": "https://unsplash.it/600/300?image=171",
         "author": {
@@ -11,7 +11,7 @@ const posts = [
         "created": "2021-06-25"
     },
     {
-        "id": 2,
+        "id": 1,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "media": "https://unsplash.it/600/400?image=112",
         "author": {
@@ -22,7 +22,7 @@ const posts = [
         "created": "2021-09-03"
     },
     {
-        "id": 3,
+        "id": 2,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "media": "https://unsplash.it/600/400?image=234",
         "author": {
@@ -33,7 +33,7 @@ const posts = [
         "created": "2021-05-15"
     },
     {
-        "id": 4,
+        "id": 3,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
@@ -44,7 +44,7 @@ const posts = [
         "created": "2021-04-03"
     },
     {
-        "id": 5,
+        "id": 4,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "media": "https://unsplash.it/600/400?image=534",
         "author": {
@@ -83,17 +83,48 @@ posts.forEach((post) => {
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
+                <a class="like-button  js-like-button" href="#" data-postid="${post['id']}">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
             </div>
             <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${post['likes']}</b> persone
+                Piace a <b id="like-counter-${post['id']}" class="js-likes-counter">${post['likes']}</b> persone
             </div>
+        </div>
     </div>
     `;
 
     // add post to page
     containerElement.append(newPost);
+});
+
+console.log(document.querySelectorAll('.js-likes-counter'))
+
+
+const likeButtonList = document.querySelectorAll('.like-button');
+const likeCounterList = document.querySelectorAll('.js-likes-counter');
+
+likeButtonList.forEach(button =>{
+    button.addEventListener('click', ()=>{
+
+        // number that matches a button with the index of its post
+        const buttonId = posts[button.getAttribute('data-postid')];
+        
+        // checks if you've like the post before
+        if(!button.classList.contains('like-button--liked')){
+            // if you are adding a like it increases the likes in the object array and changes the html to reflect it
+            buttonId['likes']++;
+            likeCounterList[button.getAttribute('data-postid')].innerHTML = buttonId['likes']
+        } else{
+            // if you are removing a like it decreses the likes in the object array and changes the html to reflect it
+            buttonId['likes']--;
+            likeCounterList[button.getAttribute('data-postid')].innerHTML = buttonId['likes']
+        }
+
+        // toogles the liked class onto the button
+        button.classList.toggle('like-button--liked');
+    })
 })
+
+console.log(document.querySelectorAll('.like-button'))
