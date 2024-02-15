@@ -64,6 +64,9 @@ posts.forEach((post) => {
     const newPost = document.createElement('div');
     newPost.classList.add('post');
 
+    // converts date info in italian formatting
+    const localDate = new Date(post['created']).toLocaleDateString('it-IT');
+
     newPost.innerHTML = `
     <div class="post__header">
         <div class="post-meta">                    
@@ -72,7 +75,7 @@ posts.forEach((post) => {
             </div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${post['author']['name']}</div>
-                <div class="post-meta__time">${post['created']}</div>
+                <div class="post-meta__time">${localDate}</div>
             </div>                    
         </div>
     </div>
@@ -98,9 +101,6 @@ posts.forEach((post) => {
     // add post to page
     containerElement.append(newPost);
 });
-
-console.log(document.querySelectorAll('.js-likes-counter'))
-
 
 const likeButtonList = document.querySelectorAll('.like-button');
 const likeCounterList = document.querySelectorAll('.js-likes-counter');
