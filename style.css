@@ -97,6 +97,19 @@ h1 {
     width: 100%;
 }
 
+.fallback{
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;    
+
+    font-weight: bold;
+    font-size: 1.5em;
+    border-radius: 50%;
+    background-color: #023047;
+    color: white;
+}
+
 .likes {
     display: flex;
     justify-content: space-around;

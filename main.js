@@ -71,7 +71,7 @@ posts.forEach((post) => {
     <div class="post__header">
         <div class="post-meta">                    
             <div class="post-meta__icon">
-                <img class="profile-pic" src="${post['author']['image']}" alt="Phil Mangione">                    
+                <img class="profile-pic" src="${post['author']['image']}" alt="${post['author']['name']}" onerror="handleImageError(this)">                    
             </div>
             <div class="post-meta__data">
                 <div class="post-meta__author">${post['author']['name']}</div>
@@ -137,3 +137,21 @@ likeButtonList.forEach(button =>{
 })
 
 console.log(document.querySelectorAll('.like-button'))
+
+// --- FUNCTION ---
+function handleImageError(imgElement){
+    
+    imgElement.style.display = 'none';
+
+    
+    const nameSplit = imgElement.getAttribute('alt').split(' ');
+    const userInitials = document.createElement('div');
+    userInitials.classList.add('fallback')
+    
+    nameSplit.forEach(word =>{
+        userInitials.innerHTML += word[0].toUpperCase();
+    });
+
+    imgElement.after(userInitials)
+
+};
